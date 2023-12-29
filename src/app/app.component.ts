@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { AppService } from './app.service';
+import * as xml2js from 'xml2js';
 
 @Component({
   selector: 'app-root',
@@ -7,26 +8,30 @@ import { AppService } from './app.service';
   styleUrl: './app.component.scss'
 })
 export class AppComponent {
-  title = 'tema2';
-  data: any;
-  xmlContent = '';
 
-  constructor(private appService: AppService) {
-  
-  }
+  xmlString: string = '';
+
+  constructor(private appService: AppService) {}
 
   ngOnInit(): void {
-    this.loadData();
+    const xmlUrl = 'assets/baza-de-cunostinte.xml';
+    this.appService.getXmlData(xmlUrl).subscribe((data) => {
+      this.xmlString = data;
+      console.log(this.xmlString); // Output the XML string
+
+      // Parse XML string to JSON
+      this.parseXmlString();
+    });
   }
 
-  xmlFilePath: string = 'assets/baza-de-cunostinte.xml';
-
-  async loadData() {
-    try {
-      this.data = await this.appService.parseXML(this.xmlFilePath);
-      console.log('XML Data:', JSON.stringify(this.data));
-    } catch (error) {
-      console.error('Error loading XML data:', error);
-    }
+  private parseXmlString(): void {
+    xml2js.parseString(this.xmlString, { explicitArray: false }, (error, data) => {
+      if (error) {
+        console.error('Error parsing XML:', error);
+      } else {
+        const jsonData = data;
+        console.log(jsonData); // Output the parsed JSON data
+      }
+    });
   }
 }

@@ -10,23 +10,8 @@ export class AppService {
 
   constructor(private http: HttpClient) { }
 
-  parseXML(filePath: string): Observable<any> {
-    return this.http.get(filePath, { responseType: 'text' }).pipe(
-      map(xmlString => this.convertXmlToJson(xmlString))
-    );
+  getXmlData(url: string): Observable<string> {
+    return this.http.get(url, { responseType: 'text' });
   }
 
-  private convertXmlToJson(xmlString: string): Observable<any> {
-    return new Observable((observer) => {
-      const parser = new xml2js.Parser({ explicitArray: false });
-      parser.parseString(xmlString, (err, result) => {
-        if (err) {
-          observer.error(err);
-        } else {
-          observer.next(result);
-          observer.complete();
-        }
-      });
-    });
-  }
 }
