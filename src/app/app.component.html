@@ -1,5 +1,27 @@
-<p> hello </p>
 
-<p> {{ xmlString }} </p>
+        <div class="welcome-container">
+            <h1>Bine ai venit la Gradina Zoologica!</h1>
+        
+            <button
+                (click)="getAnimals()">{{ buttonLabel}}
+            </button>
+        
+            <div *ngIf="getAnimalsClicked" class="animal-table">
+                <table>
+                    <thead>
+                    <tr>
+                        <th>Animal</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr *ngFor="let animal of animals">
+                        <td>{{ animal.nume }}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+                  
+
+  
 
 <router-outlet></router-outlet>
