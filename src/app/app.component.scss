@@ -22,6 +22,7 @@ select {
 }
 
 button {
+  margin-top: 10px;
   background-color: #008CBA; /* Blue color, you can customize */
   color: white;
   font-size: 16px;
@@ -40,7 +41,6 @@ button:hover {
   margin: 10px;
 }
 
-/* app.component.css */
 .animal-cards {
   display: flex;
   flex-direction: column;
@@ -80,29 +80,3 @@ mat-card-content {
   justify-content: center;
 }
 
-
-.animal-table {
-  margin: 0 auto;
-}
-
-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 20px;
-  border: 1px solid #008CBA; /* Border color matching the button color */
-  border-radius: 5px;
-  overflow: hidden;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-th, td {
-  border: 1px solid #008CBA; /* Border color matching the button color */
-  text-align: center;
-  background-color: white;
-  padding: 8px;
-}
-
-th {
-  background-color: #008CBA; /* Background color matching the button color */
-  color: white;
-}

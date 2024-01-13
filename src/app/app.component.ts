@@ -37,6 +37,9 @@ export class AppComponent {
   displayMessage: string = '';
   noAnimals: boolean = false;
 
+  animalAttacks: any[] = [];
+  incompatibleAnimals: any[] = [];
+
   finalAnimals: Animal[] = [{
     nume: 'leu',
     imageUrl: '/assets/lion.jpg'
@@ -65,13 +68,13 @@ export class AppComponent {
           this.diets[noOfDiets] = diet.tip;
           noOfDiets ++;
         }
-        // console.log(this.diets);
         let noOfHabitats: number = 0;
         for (const habitat of data.gradina_zoologica.habitate.habitat){
           this.habitats[noOfHabitats] = habitat.nume;
           noOfHabitats ++;
         }
-        console.log(this.finalAnimals[0].nume);
+        this.animalAttacks = data.gradina_zoologica.atacuri.ataca;
+        // console.log(this.animalAttacks);
       }
     });
   }
@@ -79,19 +82,11 @@ export class AppComponent {
 
 
   getAnimals(): void {
-    console.log('Selected Diet:', this.selectedDiet);
-    console.log('Selected Habitat:', this.selectedHabitat);
     this.finalAnimals = [];
     
     if (this.selectedDiet && this.selectedHabitat) {
       this.displayError = false;
-      console.log("dieta:\n");
-      console.log(this.animalMatchesDiet(this.selectedDiet));
-      console.log('habitat:\n');
-      console.log(this.animalMatchesHabitat(this.selectedHabitat));
       this.animals = this.findCommonElements(this.animalMatchesDiet(this.selectedDiet), this.animalMatchesHabitat(this.selectedHabitat));
-      console.log('la comun:\n');
-      console.log(this.animals);
       this.getAnimalsClicked = true;
       if(this.animals.length === 0){
         this.displayMessage = 'Nu exista animale pentru criteriile selectate';
@@ -100,7 +95,6 @@ export class AppComponent {
       else {
         let noOfAnimals: number = 0;
         for (const animal of this.animals){
-          console.log(animal);
           if (!this.finalAnimals[noOfAnimals]) {
             this.finalAnimals[noOfAnimals] = {
               nume: '',
@@ -111,12 +105,11 @@ export class AppComponent {
           this.finalAnimals[noOfAnimals].imageUrl = animal.image;
           noOfAnimals ++;
         }
-        console.log(this.finalAnimals);
         this.noAnimals = false;
       }
     } else {
       this.displayError = true;
-      this.errorMessage = 'Please select both diet and habitat before getting animals!';
+      this.errorMessage = 'Selecteaza si dieta si habitatul!';
     }
   }
   
@@ -133,7 +126,6 @@ export class AppComponent {
       if (diet.tip === selectedDiet) {
         if (Array.isArray(diet.animale.animal)) {
           foundAnimals = diet.animale.animal;
-          console.log(foundAnimals);
         } else {
           foundAnimals = [diet.animale.animal];
         }
@@ -161,6 +153,47 @@ export class AppComponent {
     }
 
     return foundAnimals;
+  }
+
+  getIncompatibleAnimals(): void {
+    // Assuming you have a method to fetch incompatible animals
+    this.animalAttacks.forEach((attack: any) => {
+      const attacker = attack.atacator;
+      const target = attack.tinta;
+
+      // Check if the attacker and target are not compatible
+      if (!this.areAnimalsCompatible(attacker, target)) {
+        this.addIncompatibleAnimal(attacker);
+        this.addIncompatibleAnimal(target);
+      }
+    });
+  }
+
+  private addIncompatibleAnimal(animalName: string): void {
+    const existingAnimal = this.incompatibleAnimals.find((animal) => animal.name === animalName);
+
+    if (!existingAnimal) {
+      // Assuming you have a method to get the image URL for the animal
+      this.incompatibleAnimals.push({ name: animalName, imageUrl: '/assets/lion/jpg' });
+    }
+  }
+
+  private areAnimalsCompatible(animal1: string, animal2: string): boolean {
+    // Iterate through the list of incompatible animal pairs
+    for (const attack of this.animalAttacks) {
+      const attacker = attack.atacator;
+      const target = attack.tinta;
+  
+      // Check if the given animals match any incompatible pair
+      if (
+        (animal1 === attacker && animal2 === target) ||
+        (animal1 === target && animal2 === attacker)
+      ) {
+        return false; // Animals are incompatible
+      }
+    }
+  
+    return true; // No incompatibility found
   }
   
 }

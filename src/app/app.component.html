@@ -23,7 +23,7 @@
         {{ errorMessage }}
     </div>
   
-    <button (click)="getAnimals()">Vezi animalele</button>
+    <button (click)="getAnimals()">Vezi animalele selectate</button>
   
     <div *ngIf="getAnimalsClicked" class="animal-cards">
         <div *ngIf="!noAnimals">
@@ -42,8 +42,15 @@
           </div>
       
     </div>
+
+    <button (click)="getIncompatibleAnimals()">Vezi animalele ce nu pot sta in aceeasi cusca</button>
+
+    <div *ngFor="let animal of incompatibleAnimals">
+        <div>{{ animal.nume }}</div>
+        <img [src]="animal.imageUrl" alt="{{ animal.nume }}">
+      </div>
   </div>
-  
+
         
   
 
