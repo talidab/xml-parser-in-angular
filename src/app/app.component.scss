@@ -1,53 +1,65 @@
-
 .welcome-container {
-    text-align: center;
-    align-items: center;
-    display: flex;
-    flex-direction: column;
-    margin-top: 50px;
-  }
-  
-  h1 {
-    color: black; 
-  }
-  
-  button {
-    background-color: #008CBA; /* Blue color, you can customize */
-    color: white;
-    font-size: 16px;
-    padding: 10px 20px;
-    cursor: pointer;
-    border: none;
-    border-radius: 5px;
-  }
-  
-  button:hover {
-    background-color: #00547E; /* Darker shade of blue on hover, you can customize */
-  }
+  text-align: center;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  margin-top: 50px;
+}
+
+h1 {
+  color: black; 
+}
+
+label {
+  margin-right: 10px;
+}
+
+select {
+  padding: 8px;
+  margin-bottom: 10px;
+}
+
+button {
+  background-color: #008CBA; /* Blue color, you can customize */
+  color: white;
+  font-size: 16px;
+  padding: 10px 20px;
+  cursor: pointer;
+  border: none;
+  border-radius: 5px;
+}
+
+button:hover {
+  background-color: #00547E; /* Darker shade of blue on hover, you can customize */
+}
+
+.error-message {
+  color: #b61414; /* Red color, you can customize */
+  margin: 10px;
+}
 
 .animal-table {
-margin: 0 auto;
+  margin: 0 auto;
 }
 
 table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 20px;
-    border: 1px solid #008CBA; /* Border color matching the button color */
-    border-radius: 5px;
-    overflow: hidden;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  }
-  
-  th, td {
-    border: 1px solid #008CBA; /* Border color matching the button color */
-    text-align: center;
-    background-color: white;
-    padding: 8px;
-  }
-  
-  th {
-    background-color: #008CBA; /* Background color matching the button color */
-    color: white;
-  }
-  
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+  border: 1px solid #008CBA; /* Border color matching the button color */
+  border-radius: 5px;
+  overflow: hidden;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+th, td {
+  border: 1px solid #008CBA; /* Border color matching the button color */
+  text-align: center;
+  background-color: white;
+  padding: 8px;
+}
+
+th {
+  background-color: #008CBA; /* Background color matching the button color */
+  color: white;
+}
