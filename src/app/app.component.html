@@ -4,15 +4,17 @@
     <h1>Bine ai venit la Gradina Zoologica!</h1>
   
     <div>
-      <label for="diet">Select Diet:</label>
+      <label for="diet">Selecteaza dieta:</label>
       <select id="diet" [(ngModel)]="selectedDiet">
+        <option value="" disabled selected>dieta</option>
         <option *ngFor="let diet of diets" [value]="diet">{{ diet }}</option>
       </select>
     </div>
   
     <div>
-      <label for="habitat">Select Habitat:</label>
+      <label for="habitat">Selecteaza habitatul:</label>
       <select id="habitat" [(ngModel)]="selectedHabitat">
+        <option value="" disabled selected>habitat</option>
         <option *ngFor="let habitat of habitats" [value]="habitat">{{ habitat }}</option>
       </select>
     </div>
@@ -21,22 +23,18 @@
         {{ errorMessage }}
     </div>
   
-    <button (click)="getAnimals()">See animals</button>
+    <button (click)="getAnimals()">Vezi animalele</button>
   
-    <div *ngIf="getAnimalsClicked" class="animal-table">
+    <div *ngIf="getAnimalsClicked" class="animal-cards">
         <div *ngIf="!noAnimals">
-            <table>
-                <thead>
-                  <tr>
-                    <th>Animal</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr *ngFor="let animal of animals">
-                    <td>{{ animal }}</td>
-                  </tr>
-                </tbody>
-              </table>
+            <div *ngFor="let animal of finalAnimals" class="animal-card">
+                <mat-card>
+                  <img mat-card-image [src]="animal.imageUrl" alt="{{ animal.nume }} Image" [style.width.px]="imageWidth" [style.height.px]="imageHeight">
+                  <mat-card-content>
+                    <p>{{ animal.nume }}</p>
+                  </mat-card-content>
+                </mat-card>
+              </div>
         </div>
 
         <div *ngIf="noAnimals" class="error-message">

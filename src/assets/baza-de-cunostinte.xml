@@ -37,31 +37,61 @@
     <dieta>
         <tip>carnivor</tip>
         <animale>
-            <animal>leu</animal>
-            <animal>tigru</animal>
-            <animal>crocodil</animal>
+            <animal>
+              <nume>leu</nume>
+              <image>/assets/lion.jpg</image>
+            </animal>
+            <animal>
+              <nume>tigru</nume>
+              <image>/assets/tiger.jpg</image>
+            </animal>
+            <animal>
+              <nume>crocodil</nume>
+              <image>/assets/crocodil.jpg</image>
+            </animal>
         </animale>
     </dieta>
     <dieta>
         <tip>erbivor</tip>
         <animale>
-            <animal>elefant</animal>
-            <animal>zimbru</animal>
-            <animal>zebra</animal>
-            <animal>gorila</animal>
-            <animal>strut</animal>
+            <animal>
+              <nume>elefant</nume>
+              <image>/assets/elephant.jpg</image>
+            </animal>
+            <animal>
+              <nume>zimbru</nume>
+              <image>/assets/zimbru.jpeg</image>
+            </animal>
+            <animal>
+              <nume>zebra</nume>
+              <image>/assets/zebra.jpg</image>
+            </animal>
+            <animal>
+              <nume>gorila</nume>
+              <image>/assets/gorila.jpg</image>
+            </animal>
+            <animal>
+              <nume>strut</nume>
+              <image>/assets/strut.jpg</image>
+            </animal>
         </animale>
     </dieta>
     <dieta>
         <tip>omnivor</tip>
         <animale>
-            <animal>urs</animal>
+            <animal>
+              <nume>urs</nume>
+              <image>/assets/urs.jpeg</image>
+            </animal>
         </animale>
     </dieta>
     <dieta>
         <tip>piscivor</tip>
         <animale>
-            <animal>foca</animal>
+            <animal>
+              <nume>foca</nume>
+              <image>/assets/foca.jpg</image>
+            </animal>
         </animale>
     </dieta>
   </diete>
@@ -70,34 +100,73 @@
     <habitat>
       <nume>savana</nume>
       <animale>
-        <animal>leu</animal>
-        <animal>elefant</animal>
-        <animal>tigru</animal>
-        <animal>zebra</animal>
-        <animal>strut</animal>
+        <animal>
+          <nume>leu</nume>
+          <image>/assets/lion.jpg</image>
+        </animal>
+        <animal>
+          <nume>elefant</nume>
+          <image>/assets/elephant.jpg</image>
+        </animal>
+        <animal>
+          <nume>tigru</nume>
+          <image>/assets/tiger.jpg</image>
+        </animal>
+        <animal>
+          <nume>zebra</nume>
+          <image>/assets/zebra.jpg</image>
+        </animal>
+        <animal>
+          <nume>strut</nume>
+          <image>/assets/strut.jpg</image>
+        </animal>
       </animale>
     </habitat>
     <habitat>
       <nume>padure</nume>
       <animale>
-        <animal>leu</animal>
-        <animal>elefant</animal>
-        <animal>zimbru</animal>
-        <animal>urs</animal>
+        <animal>
+          <nume>leu</nume>
+          <image>/assets/lion.jpg</image>
+        </animal>
+        <animal>
+          <nume>elefant</nume>
+          <image>/assets/elephant.jpg</image>
+        </animal>
+        <animal>
+          <nume>zimbru</nume>
+          <image>/assets/zimbru.jpeg</image>
+        </animal>
+        <animal>
+          <nume>urs</nume>
+          <image>/assets/urs.jpeg</image>
+        </animal>
       </animale>
     </habitat>
     <habitat>
       <nume>jungla</nume>
       <animale>
-        <animal>tigru</animal>
-        <animal>gorila</animal>
+        <animal>
+          <nume>tigru</nume>
+          <image>/assets/tiger.jpg</image>
+        </animal>
+        <animal>
+          <nume>gorila</nume>
+          <image>/assets/gorila.jpg</image>
+        </animal>
       </animale>
     </habitat>
     <habitat>
       <nume>apa</nume>
       <animale>
-        <animal>foca</animal>
-        <animal>crocodil</animal>
+        <animal>
+          <nume>foca</nume>
+          <image>/assets/foca.jpg</image>
+        </animal>
+        <animal>
+          <nume>crocodil</nume>
+          <image>/assets/crocodil.jpg</image>
+        </animal>
       </animale>
     </habitat>
   </habitate>
@@ -215,47 +284,66 @@
 
 <reguli>
     <regula>
-      <id>1</id>
-      <description>Animale carnivore</description>
-      <condition>
-        <if>
-          <animal>Animal</animal>
+    <id>1</id>
+    <description>Animale carnivore din pădure</description>
+    <condition>
+      <if>
+        <and>
           <areDieta>carnivor</areDieta>
-        </if>
-      </condition>
-    </regula>
+          <areHabitat>padure</areHabitat>
+        </and>
+      </if>
+    </condition>
+    <then>
+      <animal>carnivore_din_padure</animal>
+    </then>
+  </regula>
 
     <regula>
-      <id>2</id>
-      <description>Animale erbivore</description>
-      <condition>
-        <if>
-          <animal>Animal</animal>
+    <id>2</id>
+    <description>Animale erbivore din pădure</description>
+    <condition>
+      <if>
+        <and>
           <areDieta>erbivor</areDieta>
-        </if>
-      </condition>
-    </regula>
+          <areHabitat>padure</areHabitat>
+        </and>
+      </if>
+    </condition>
+    <then>
+      <animal>erbivore_din_padure</animal>
+    </then>
+  </regula>
 
     <regula>
-      <id>3</id>
-      <description>Animale piscivore</description>
-      <condition>
-        <if>
-          <animal>Animal</animal>
+    <id>3</id>
+    <description>Animale erbivore din savana</description>
+    <condition>
+      <if>
+        <and>
+          <areDieta>erbivor</areDieta>
+          <areHabitat>savana</areHabitat>
+        </and>
+      </if>
+    </condition>
+    <then>
+      <animal>erbivore_din_savana</animal>
+    </then>
+  </regula>
+
+    <regula>
+    <id>4</id>
+    <description>Animale piscivore din apa</description>
+    <condition>
+      <if>
+        <and>
           <areDieta>piscivor</areDieta>
-        </if>
-      </condition>
-    </regula>
-
-    <regula>
-      <id>4</id>
-      <description>Animale omnivore</description>
-      <condition>
-        <if>
-          <animal>Animal</animal>
-          <areDieta>omnivorr</areDieta>
-        </if>
-      </condition>
-    </regula>
-  </reguli>
+          <areHabitat>apa</areHabitat>
+        </and>
+      </if>
+    </condition>
+    <then>
+      <animal>piscivor_din_apa</animal>
+    </then>
+  </regula>
 </gradina_zoologica>

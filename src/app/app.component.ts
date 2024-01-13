@@ -2,11 +2,18 @@ import { Component } from '@angular/core';
 import { AppService } from './app.service';
 import * as xml2js from 'xml2js';
 
+interface Animal {
+  nume: string;
+  imageUrl: string;
+}
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
+
+
 export class AppComponent {
 
   xmlString: string = '';
@@ -22,10 +29,18 @@ export class AppComponent {
 
   getAnimalsClicked: boolean = false;
 
+  imageWidth: number = 150; // Set the desired width
+  imageHeight: number = 110; // Set the desired height
+
   errorMessage: string = '';
   displayError: boolean = false;
   displayMessage: string = '';
   noAnimals: boolean = false;
+
+  finalAnimals: Animal[] = [{
+    nume: 'leu',
+    imageUrl: '/assets/lion.jpg'
+  }];
 
   constructor(private appService: AppService) {}
 
@@ -56,6 +71,7 @@ export class AppComponent {
           this.habitats[noOfHabitats] = habitat.nume;
           noOfHabitats ++;
         }
+        console.log(this.finalAnimals[0].nume);
       }
     });
   }
@@ -65,16 +81,37 @@ export class AppComponent {
   getAnimals(): void {
     console.log('Selected Diet:', this.selectedDiet);
     console.log('Selected Habitat:', this.selectedHabitat);
+    this.finalAnimals = [];
     
     if (this.selectedDiet && this.selectedHabitat) {
       this.displayError = false;
+      console.log("dieta:\n");
+      console.log(this.animalMatchesDiet(this.selectedDiet));
+      console.log('habitat:\n');
+      console.log(this.animalMatchesHabitat(this.selectedHabitat));
       this.animals = this.findCommonElements(this.animalMatchesDiet(this.selectedDiet), this.animalMatchesHabitat(this.selectedHabitat));
+      console.log('la comun:\n');
+      console.log(this.animals);
       this.getAnimalsClicked = true;
       if(this.animals.length === 0){
         this.displayMessage = 'Nu exista animale pentru criteriile selectate';
         this.noAnimals = true;
       }
       else {
+        let noOfAnimals: number = 0;
+        for (const animal of this.animals){
+          console.log(animal);
+          if (!this.finalAnimals[noOfAnimals]) {
+            this.finalAnimals[noOfAnimals] = {
+              nume: '',
+              imageUrl: ''
+            };
+          }
+          this.finalAnimals[noOfAnimals].nume = animal.nume;
+          this.finalAnimals[noOfAnimals].imageUrl = animal.image;
+          noOfAnimals ++;
+        }
+        console.log(this.finalAnimals);
         this.noAnimals = false;
       }
     } else {
@@ -83,10 +120,12 @@ export class AppComponent {
     }
   }
   
-  findCommonElements(array1: any[], array2: any[]) {
-    return array1.filter(value => array2.includes(value));
+  findCommonElements(array1: any[], array2: any[]): any[] {
+    return array1.filter(animal1 =>
+      array2.some(animal2 => animal2.nume === animal1.nume)
+    );
   }
-
+  
   private animalMatchesDiet(selectedDiet: string): any[] {
     let foundAnimals: any[] = [];
 
@@ -94,6 +133,7 @@ export class AppComponent {
       if (diet.tip === selectedDiet) {
         if (Array.isArray(diet.animale.animal)) {
           foundAnimals = diet.animale.animal;
+          console.log(foundAnimals);
         } else {
           foundAnimals = [diet.animale.animal];
         }

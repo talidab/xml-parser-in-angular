@@ -16,7 +16,9 @@ label {
 
 select {
   padding: 8px;
-  margin-bottom: 10px;
+  margin-bottom: 8px;
+  border-radius: 5px; 
+  border: 1px solid #000000; 
 }
 
 button {
@@ -37,6 +39,47 @@ button:hover {
   color: #b61414; /* Red color, you can customize */
   margin: 10px;
 }
+
+/* app.component.css */
+.animal-cards {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  flex-wrap: wrap;
+}
+
+.animal-card {
+  margin: 10px;
+}
+
+mat-card {
+  width: 200px; /* Set your desired card width */
+  background-color: white;
+  border: 1px solid #ddd; /* Set your desired border color */
+  border-radius: 10px; /* Set your desired border radius */
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+img {
+  margin-top: 10px;
+  width: 100%; /* Ensure the image fills the card */
+  height: auto; /* Maintain aspect ratio */
+  object-fit: cover; /* Center and cover the image within the container */
+  border-radius: 5px 5px 5px 5px;
+
+}
+
+mat-card-content {
+  text-align: center;
+  flex-grow: 1; /* Ensure content takes up remaining space */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
 
 .animal-table {
   margin: 0 auto;
