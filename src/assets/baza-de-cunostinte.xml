@@ -347,5 +347,47 @@
       <animal>piscivor_din_apa</animal>
     </then>
   </regula>
+
+  <regula>
+    <id>5</id>
+    <descriere>Verifică dacă două animale pot locui în aceeași cusă la zoo</descriere>
+    <conditii>
+        <habitat_comun>
+            <animal1>Animal1</animal1>
+            <animal2>Animal2</animal2>
+        </habitat_comun>
+        <nu_se_ataca>
+            <atacator>Animal1</atacator>
+            <tinta>Animal2</tinta>
+        </nu_se_ataca>
+        <nu_se_ataca>
+            <atacator>Animal2</atacator>
+            <tinta>Animal1</tinta>
+        </nu_se_ataca>
+        <animale_diferite>
+            <animal1>Animal1</animal1>
+            <animal2>Animal2</animal2>
+        </animale_diferite>
+    </conditii>
+  </regula>
+
+  <regula>
+    <id>6</id>
+    <descriere>Animale care se atacă reciproc și au habitaturi diferite</descriere>
+    <conditii>
+        <se_ataca_reciproc>
+            <atacator>Animal1</atacator>
+            <tinta>Animal2</tinta>
+        </se_ataca_reciproc>
+        <habitaturi_diferite>
+            <habitat1>Animal1</habitat1>
+            <habitat2>Animal2</habitat2>
+        </habitaturi_diferite>
+    </conditii>
+</regula>
+
   </reguli>
+
+
+
 </gradina_zoologica>
