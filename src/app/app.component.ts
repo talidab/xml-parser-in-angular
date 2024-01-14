@@ -19,9 +19,9 @@ export class AppComponent {
   xmlString: string = '';
   jsonData: any;
 
-
   diets: any[] = [];
   animals: any[] = [];
+  allAnimals: any[] = [];
   habitats: any[] = [];
 
   selectedDiet: string = '';
@@ -29,16 +29,20 @@ export class AppComponent {
 
   getAnimalsClicked: boolean = false;
 
-  imageWidth: number = 150; // Set the desired width
-  imageHeight: number = 110; // Set the desired height
+  imageWidth: number = 150; 
+  imageHeight: number = 110; 
 
   errorMessage: string = '';
   displayError: boolean = false;
   displayMessage: string = '';
   noAnimals: boolean = false;
 
-  animalAttacks: any[] = [];
   incompatibleAnimals: any[] = [];
+
+  selectedAnimal1: string = '';
+  selectedAnimal2: string = '';
+  compatibilityResult: string | undefined;
+  compatibilityResultColor: string = '';
 
   finalAnimals: Animal[] = [{
     nume: 'leu',
@@ -53,7 +57,6 @@ export class AppComponent {
       this.xmlString = data;
       this.parseXmlString();
     });
-    
   }
 
   private parseXmlString(): void {
@@ -63,23 +66,29 @@ export class AppComponent {
       } else {
         this.jsonData = data;
         console.log(this.jsonData);
+
         let noOfDiets: number = 0;
         for (const diet of data.gradina_zoologica.diete.dieta){
           this.diets[noOfDiets] = diet.tip;
           noOfDiets ++;
         }
+
         let noOfHabitats: number = 0;
         for (const habitat of data.gradina_zoologica.habitate.habitat){
           this.habitats[noOfHabitats] = habitat.nume;
           noOfHabitats ++;
         }
-        this.animalAttacks = data.gradina_zoologica.atacuri.ataca;
-        // console.log(this.animalAttacks);
+
+        let noOfAnimals = 0;
+        for(const animal of data.gradina_zoologica.animale.animal) {
+          this.allAnimals[noOfAnimals] = animal.nume;
+          noOfAnimals ++;
+        }
+
+        this.incompatibleAnimals = data.gradina_zoologica.atacuri.ataca;
       }
     });
   }
-
-
 
   getAnimals(): void {
     this.finalAnimals = [];
@@ -155,45 +164,26 @@ export class AppComponent {
     return foundAnimals;
   }
 
-  getIncompatibleAnimals(): void {
-    // Assuming you have a method to fetch incompatible animals
-    this.animalAttacks.forEach((attack: any) => {
-      const attacker = attack.atacator;
-      const target = attack.tinta;
-
-      // Check if the attacker and target are not compatible
-      if (!this.areAnimalsCompatible(attacker, target)) {
-        this.addIncompatibleAnimal(attacker);
-        this.addIncompatibleAnimal(target);
-      }
-    });
-  }
-
-  private addIncompatibleAnimal(animalName: string): void {
-    const existingAnimal = this.incompatibleAnimals.find((animal) => animal.name === animalName);
-
-    if (!existingAnimal) {
-      // Assuming you have a method to get the image URL for the animal
-      this.incompatibleAnimals.push({ name: animalName, imageUrl: '/assets/lion/jpg' });
+  checkCompatibility(): void {
+    if (this.selectedAnimal1 && this.selectedAnimal2) {
+      this.compatibilityResult = this.areAnimalsCompatible(this.selectedAnimal1, this.selectedAnimal2)
+        ? 'Animalele selectate nu se ataca intre ele.'
+        : 'Animalele selectate se ataca intre ele.';
+        this.compatibilityResultColor = this.areAnimalsCompatible(this.selectedAnimal1, this.selectedAnimal2) ? 'green' : '#b61414';
+    } else {
+      this.compatibilityResult = 'Selecteaza ambele animale pentru a verifica compatibilitatea.';
+      this.compatibilityResultColor = '#b61414';
     }
   }
 
-  private areAnimalsCompatible(animal1: string, animal2: string): boolean {
-    // Iterate through the list of incompatible animal pairs
-    for (const attack of this.animalAttacks) {
-      const attacker = attack.atacator;
-      const target = attack.tinta;
+  areAnimalsCompatible(animal1: string, animal2: string): boolean {
+    const incompatiblePair = this.incompatibleAnimals.find(pair =>
+      (pair.atacator === animal1 && pair.tinta === animal2) ||
+      (pair.atacator === animal2 && pair.tinta === animal1)
+    );
   
-      // Check if the given animals match any incompatible pair
-      if (
-        (animal1 === attacker && animal2 === target) ||
-        (animal1 === target && animal2 === attacker)
-      ) {
-        return false; // Animals are incompatible
-      }
-    }
-  
-    return true; // No incompatibility found
+    return !incompatiblePair;
   }
+  
   
 }

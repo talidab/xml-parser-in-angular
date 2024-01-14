@@ -43,15 +43,31 @@
       
     </div>
 
-    <button (click)="getIncompatibleAnimals()">Vezi animalele ce nu pot sta in aceeasi cusca</button>
+    <div class="compatibility-container">
+      <p> Aici poti verifica daca doua animale se ataca intre ele</p>
 
-    <div *ngFor="let animal of incompatibleAnimals">
-        <div>{{ animal.nume }}</div>
-        <img [src]="animal.imageUrl" alt="{{ animal.nume }}">
-      </div>
-  </div>
+      <label for="animal1">Selecteaza Animal 1:</label>
+      <select id="animal1" [(ngModel)]="selectedAnimal1">
+        <option value="" disabled selected>animal 1</option>
+        <option *ngFor="let animal of allAnimals" [value]="animal">{{ animal }}</option>
+      </select>
 
+      <label for="animal2">Selecteaza Animal 2:</label>
+      <select id="animal2" [(ngModel)]="selectedAnimal2">
+        <option value="" disabled selected>animal 2</option>
+        <option *ngFor="let animal of allAnimals" [value]="animal">{{ animal }}</option>
+      </select>
+
+      <button (click)="checkCompatibility()">Verifica</button>
+
+      <div *ngIf="compatibilityResult !== undefined"class="message">
+        <div [style.color]="compatibilityResultColor">
+          {{ compatibilityResult }}
+        </div>
         
+      </div>
+
+    </div>
   
 
 <router-outlet></router-outlet>
