@@ -44,6 +44,9 @@ export class AppComponent {
   compatibilityResult: string | undefined;
   compatibilityResultColor: string = '';
 
+  selectedAnimal3: string = '';
+  foodResult: string | undefined;
+
   finalAnimals: Animal[] = [{
     nume: 'leu',
     imageUrl: '/assets/lion.jpg'
@@ -184,6 +187,26 @@ export class AppComponent {
   
     return !incompatiblePair;
   }
+
+
   
+  getAnimalFoodType(animalName: string): string {
+    for (const foodType of this.jsonData.gradina_zoologica.hranire.hrana) {
+      if (Array.isArray(foodType.animale.animal) && foodType.animale.animal.includes(animalName)) {
+        return foodType.tip;
+      } else if (foodType.animale.animal === animalName) {
+        return foodType.tip;
+      }
+    }
+    return 'Necunoscut';
+  }
+
+  checkFoodType(): void {
+    if (this.selectedAnimal3) {
+      this.foodResult = this.getAnimalFoodType(this.selectedAnimal3);
+    } else {
+      this.foodResult = 'Nu exista hrana inregistrata pentru acest animal';
+    }
+  }
   
 }

@@ -66,8 +66,25 @@
         </div>
         
       </div>
-
     </div>
+
+    <div class="food-container">
+      <p> Aici poti verifica cu ce se hranesc animalele</p>
+
+      <label for="animal1">Selecteaza Animal:</label>
+      <select id="animal1" [(ngModel)]="selectedAnimal3">
+        <option value="" disabled selected>animal</option>
+        <option *ngFor="let animal of allAnimals" [value]="animal">{{ animal }}</option>
+      </select>
+
+      <button (click)="checkFoodType()">Verifica</button>
+
+      <div *ngIf="foodResult !== undefined" class="message">
+          {{ foodResult }}
+      </div>
+    </div>
+
+  </div>
   
 
 <router-outlet></router-outlet>
